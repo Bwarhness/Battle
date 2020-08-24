@@ -16,12 +16,11 @@
     "express": "^4.15.2",
     "install": "^0.13.0",
     "ip": "^1.1.5",
-    "npm": "^6.11.3",
     "socket.io": "^2.2.0",
-    "socket.io-client": "^2.2.0"
+    "socket.io-client": "^2.2.0",
+    "node-key-sender": "^1.0.11"
   },
   "devDependencies": {
-    "electron": "^6.0.9",
-    "node-key-sender": "^1.0.11"
+    "electron": "^6.0.9"
   }
 }
