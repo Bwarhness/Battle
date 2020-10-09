@@ -1,8 +1,10 @@
 var exports = module.exports;
 var ks = require("node-key-sender");
 
+console.log("asd");
 exports.setIOListeners = socket => {
-  socket.on("key", val => {
+  socket.on("attack", val => {
+    console.log(val)
     var robot = require("robotjs");
     // Speed up the mouse.
     robot.setMouseDelay(2);

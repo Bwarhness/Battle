@@ -13,7 +13,7 @@ exports.initSocket = () => {
         console.log('a user connected');     
         console.log(_clients)
         socket.on('attack', typeOfAttack => {
-            console.log(typeOfAttack)
+            console.log('attack', typeOfAttack)
             io.emit('attack', typeOfAttack)
         })
         socket.on('getClients', clientId => {

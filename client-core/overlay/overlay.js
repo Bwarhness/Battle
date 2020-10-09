@@ -1,7 +1,12 @@
 module.exports.startOverlay = socket => {
   const electron = require("electron");
+  const path = require('path')
+  const { readdirSync } = require('fs')
   const { app, BrowserWindow } = require("electron");
+  const { ipcMain: overlay } = require("electron");
+
   function createWindow() {
+    console.log("did it just start twice?")
     // Create the browser window.
     var screenElectron = electron.screen;
     var mainScreen = screenElectron.getPrimaryDisplay();
@@ -15,22 +20,28 @@ module.exports.startOverlay = socket => {
       resizable: false,
       alwaysOnTop: true,
       transparent: true,
+
       webPreferences: {
         nodeIntegration: true
       }
     });
-    win.setAlwaysOnTop(true, "floating", 1);
+    win.setAlwaysOnTop(true, "screen-saver", 10);
     // and load the index.html of the app.
     win.loadURL(`file://${__dirname}/overlay.html`);
   }
-  const { ipcMain } = require("electron");
-  ipcMain.on("attack", (event, arg) => {
-    console.log("got command from html, and now sending attack to server"); // prints "ping"
+  overlay.on("attack", (event, arg) => {
+    console.log("got command from html, and now sending attack to server", arg); 
     socket.emit("attack", arg);
   });
-  ipcMain.on("getMenu", (event, arg) => {
-    console.log("got command from html, and now sending attack to server"); // 
-    event.reply('getMenuAttacks', ['pølse', 'sheep-farm', 'burn', 'doom-mode', 'flash-bang', 'anders'])
+  overlay.on("updateMenu", (event, arg) => {
+
+    const getDirectories = source =>
+    readdirSync(path.join(source), { withFileTypes: true })
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => dirent.name)
+    console.log(getDirectories(process.cwd() + '/client-features'));
+    console.log("Getting menu from overlay"); // 
+    event.reply('updateAttacks', ['pølse', 'sheep-farm', 'burn', 'doom-mode', 'flash-bang', 'anders', 'key'])
   });
   app.whenReady().then(createWindow);
 };

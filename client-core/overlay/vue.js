@@ -13,15 +13,24 @@ var menu = new Vue({
         }
     },
     created: function (){
-        ipcRenderer.on('getMenuAttacks', (event, arg) => {
+      ipcRenderer.send("updateMenu");
+
+        ipcRenderer.on('updateAttacks', (event, arg) => {
+             console.log("i ran1")
+
             this.items = arg;
           }),
-          ipcRenderer.on('getMana', (event, arg) => {
+          ipcRenderer.on('updateMana', (event, arg) => {
+            console.log("i ran2")
+
             this.mana = arg;
           }),
-          ipcRenderer.on('getShield', (event, arg) => {
+          ipcRenderer.on('updateShield', (event, arg) => {
+            console.log("i ran3")
+
             this.shield = arg;
           }),
-        ipcRenderer.send("getMenu");
+          console.log("i ran")
+
     }
   });

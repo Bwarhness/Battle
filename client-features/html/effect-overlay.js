@@ -5,7 +5,6 @@ _attack = (typeOfAttack, duration) => {
     var screenElectron = electron.screen;
     var mainScreen = screenElectron.getPrimaryDisplay();
     var dimensions = mainScreen.size;
-    console.log(dimensions)
     let win = new BrowserWindow({
       width: dimensions.width,
       height: dimensions.height,
@@ -29,17 +28,11 @@ _attack = (typeOfAttack, duration) => {
       win.close()}
     , duration)
   }
-  app.whenReady().then(createWindow)
+  app.whenReady().then(createWindow);
 }
 
 module.exports.setIOListeners = (socket) => {
-  
-      socket.on('attack', function(data){
-        console.log(data);
-        console.log("ree");
 
-    });
-  console.log("set io listeners")
   socket.on('attack', (data => {
     console.log('got attack from server, should now show overlay')
     _attack(data);
